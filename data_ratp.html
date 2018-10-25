@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+	  <meta charset="utf-8">
+		<title>Projet Intégration de données connectées</title>
+	</head>
+
+	<body>
+		<script type="text/javascript">
+		var request = new Request("https://data.ratp.fr/api/records/1.0/search/?dataset=accessibilite-des-lignes-du-reseau-de-surface-ratp&facet=nom_de_ligne&facet=accessibilite_ufr&facet=palette&facet=annonce_sonore_prochain_arret&facet=annonce_visuelle_prochain_arret", {
+			headers: new Headers({
+				'Content-Type': 'application/xml'
+			})
+		});
+		fetch(request).then(function(response){response.text().then(function(data){result = data})})
+		</script>
+	</body>
+</html>
