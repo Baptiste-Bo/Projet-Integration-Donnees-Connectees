@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+	  <meta charset="utf-8">
+		<title>Projet Intégration de données connectées</title>
+	</head>
+
+	<body>
+		<script type="text/javascript">
+		var request = new Request('https://stats.oecd.org/sdmx-json/data/QNA/AUS+AUT.GDP+B1_GE.CUR+VOBARSA.Q/all?startTime=2009-Q2&endTime=2011-Q4&dimensionAtObservation=allDimensions', {
+			headers: new Headers({
+				'Content-Type': 'application/xml'
+			})
+		});
+		fetch(request).then(function(response){response.text().then(function(data){result = data})})
+		</script>
+	</body>
+</html>
