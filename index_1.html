@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+	  <meta charset="utf-8">
+		<title>Projet Intégration de données connectées</title>
+	</head>
+
+	<body>
+		<script type="text/javascript">
+		var request = new Request("https://data.enseignementsup-recherche.gouv.fr/api/records/1.0/search/?dataset=fr-esr-insertion_professionnelle-master&sort=-annee&facet=annee&facet=diplome&facet=academie&facet=domaine&facet=discipline&facet=situation&facet=cle_disc&refine.annee=2014&refine.academie=Montpellier&refine.situation=30+mois+apr%C3%A8s+le+dipl%C3%B4me", {
+			headers: new Headers({
+				'Content-Type': 'application/xml'
+			})
+		});
+		fetch(request).then(function(response){response.text().then(function(data){result = data})})
+		</script>
+	</body>
+</html>
