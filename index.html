@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <title>Projet Intégration de données connectées</title>
+  </head>
+
+  <body>
+    <script>
+  var result
+        fetch('http://api.openeventdatabase.org/stats').then(
+        function(response){
+        response.json().then(function(data){
+            result = data
+            console.log(result)
+        })
+            
+        })
+  </script>
+  </body>
+</html>
