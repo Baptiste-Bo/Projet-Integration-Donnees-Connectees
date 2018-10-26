@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+	  <meta charset="utf-8">
+		<title>Projet Intégration de données connectées</title>
+	</head>
+ 	<body>
+	
+		<code>
+		<!-- Présentation rapide de l'utilité de l'application -->
+		Vous voulez partir en France ce week-end, mais n'avez pas encore trouver votre destination ? <br>
+		Vous voulez du beau temps, et une ville ou il y'a des activités à faire ? <br>
+		Cette application est faite pour vous ! <br>
+		Vous n'avez qu'à taper le nom d'une ville qui vous donne envie, <br>
+		et vous verrez le temps et les activités à faire dans cette ville pour les prochains jours :) <br>
+		Bon séjour ! <br>
+		</code><br>
+
+		<form>
+            <p>Entrez votre ville</p>
+            <input type="text" id="vil" /><br /><br />
+            <input type="submit" onClick="ville();" />
+        </form><br>
+		
+		
+			
+		<script type="text/javascript">
+			city = "Montpellier,fr"
+			key = "&appid=24c87f8b912589e4cf74c830d255d035"
+			adress = 'http://api.openweathermap.org/data/2.5/weather?q='+city+key
+			var result
+			fetch(adress).then(
+				function(response){
+					response.json().then(function(data){result = data})
+				})
+				
+			function ville()
+        {
+            var city = document.getElementById("vil").value;
+            open('http://api.openweathermap.org/data/2.5/weather?q='+city+key);
+        }
+			
+		</script>
+		
+		
+
+		
+		<em>Emphasized text</em><br>
+		<strong>Strong text</strong><br>
+		<code>A piece of computer code</code><br>
+		<samp>Sample output from a computer program</samp><br>
+		<kbd>Keyboard input</kbd><br>
+		<var>Variable</var><br>
+		
+		
+	</body>
+</html>
