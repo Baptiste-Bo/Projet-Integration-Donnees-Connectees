@@ -1,3 +1,3 @@
 # Projet-Integration-Donnees-Connectees
 
-https://github.com/Baptiste-Bo/Projet-Integration-Donnees-Connectees.git
+https://baptiste-bo.github.io/Projet-Integration-Donnees-Connectees/
