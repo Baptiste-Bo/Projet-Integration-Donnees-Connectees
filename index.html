@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+	  <meta charset="utf-8">
+		<title>Projet Intégration de données connectées</title>
+	</head>
+
+	<body>
+		<script type="text/javascript">
+		city = "Montpellier,fr"
+		key = "&appid=24c87f8b912589e4cf74c830d255d035"
+		adress = 'http://api.openweathermap.org/data/2.5/weather?q='+city+key
+		var result
+		fetch(adress).then(
+			function(response){
+				response.json().then(function(data){result = data})
+			}
+		)
+		</script>
+	</body>
+</html>
