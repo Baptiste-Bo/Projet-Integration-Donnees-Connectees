@@ -7,13 +7,17 @@
 
 	<body>
 		<script type="text/javascript">
-		city = "Montpellier,fr"
-		key = "&appid=24c87f8b912589e4cf74c830d255d035"
-		adress = 'http://api.openweathermap.org/data/2.5/weather?q='+city+key
-		var result
-		fetch(adress).then(
+		city = "Montpellier,fr";
+		key = "&appid=24c87f8b912589e4cf74c830d255d035";
+		address = 'http://api.openweathermap.org/data/2.5/weather?q='+city+key;
+		var result;
+		fetch(address).then(
 			function(response){
-				response.json().then(function(data){result = data})
+				response.json().then(function(data){
+				result = data;
+				var key_val = result['weather'][0];
+				var city_weather = key_val["main"];
+				})
 			}
 		)
 		</script>
