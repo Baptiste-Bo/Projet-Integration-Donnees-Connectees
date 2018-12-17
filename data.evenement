@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+	  <meta charset="utf-8">
+		<title>Projet Intégration de données connectées</title>
+		<link rel="stylesheet" href="style.css">
+	</head>
+ 	<body>
+	<table width="100%" border="5" align="center"> <td>
+		<strong>
+		<!-- Présentation rapide de l'utilité de l'application -->
+		<br>
+		<center>Vous voulez partir en France ce week-end, mais n'avez pas encore trouver votre destination ?
+		<img src="image1.png" alt="" height="100px" width="100px" />  </center>
+		<p align="right"> <img src="soleil.jpg" alt="" height="100px" width="100px" /> <img src="activites.png" alt="" height="100px" width="100px" /> Vous voulez du beau temps, et une ville ou il y'a des activités à faire ? </p>
+		Cette application est faite pour vous ! <br><br>
+		Vous n'avez qu'à taper le nom d'une ville qui vous donne envie, <br><br>
+		et vous verrez le temps et les activités à faire dans cette ville pour les prochains jours :) <br><br>
+		Bon séjour ! <br>
+		</strong><br>
+		</td> </table>
+		<form>
+            <p>Entrez votre ville</p>
+            <input type="text" id="vil" /><br /><br />
+            <input type="submit" onClick="ville();" />
+        </form><br>
+		
+		
+			
+		<script type="text/javascript">
+			city = "Montpellier"
+			key = "&fbclid=59ea9fb0d8c61b6e7e88539b0200fa52fb25c84c1b650679f3655faf"
+			adress = 'https://public.opendatasoft.com/api/datasets/1.0/search/?q='+city+key
+			var result
+			fetch(adress).then(
+				function(response){
+					response.json().then(function(data){result = data})
+				})
+				
+			function ville()
+        {
+            var city = document.getElementById("vil").value;
+            open('https://public.opendatasoft.com/api/datasets/1.0/search/?q='+city+key);
+        }
+		
+		</script>
+		
+		
+	</body>
+</html>
