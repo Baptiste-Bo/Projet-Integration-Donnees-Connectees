@@ -1,82 +1,89 @@
 <!DOCTYPE html>
 <html lang="fr">
 	<head>
-	  <meta charset="utf-8">
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="style.css" />
 		<title>Projet Intégration de données connectées</title>
 		<script type="text/javascript">
-			var city = "Montpellier,fr";
-			var key = "&appid=24c87f8b912589e4cf74c830d255d035";
-			var address = 'http://api.openweathermap.org/data/2.5/forecast?q='+city+key;
-			fetch(address).then(
-				function(response){
-					response.json().then(function(data){
-						var result = data["list"];
-						var dates = []; // Garder les dates des quatre prochains jours
-						var city_weather = []; // Garder le temps prévu pour les quatre prochains jours
-						var len = 0; // Stocker la longueur des deux tableaux précédents
-						for(i=0;i<result.length;i++){
-							if(result[i.toString()]["dt_txt"].search("12:00:00")!=-1){
-								dates[len] = result[i.toString()]["dt_txt"].slice(0, 10);
-								city_weather[len] = result[i.toString()]["weather"]["0"]["description"]
-								len = len + 1;
-								console.log(i);
+			function initialize(){
+				var city = "Montpellier,fr";
+				var key = "&appid=24c87f8b912589e4cf74c830d255d035";
+				var address = 'http://api.openweathermap.org/data/2.5/forecast?q='+city+key;
+				var longitude; var latitude;
+				fetch(address).then(
+					function(response){
+						response.json().then(function(data){
+							latitude = data.city.coord.lat;
+							longitude = data.city.coord.lon;
+							var result = data.list;
+							var dates = []; // Garder les dates des quatre prochains jours
+							var city_weather = []; // Garder le temps prévu pour les quatre prochains jours
+							var len = 0; // Stocker la longueur des deux tableaux précédents
+							for(i=0;i<result.length;i++){
+								if(result[i.toString()]["dt_txt"].search("12:00:00")!=-1){
+									dates[len] = result[i.toString()]["dt_txt"].slice(0, 10);
+									city_weather[len] = result[i.toString()]["weather"]["0"]["description"]
+									len = len + 1;
+								}
 							}
-						}
-						for(i=1;i<len;i++){
-							document.getElementById('date_'+i.toString()).innerHTML = dates[i];
-							document.getElementById('weather_'+i.toString()).innerHTML = city_weather[i];
-						}
-					})
-				}
-			)
+							for(i=1;i<len;i++){
+								document.getElementById('date_'+i.toString()).innerHTML = dates[i];
+								document.getElementById('weather_'+i.toString()).innerHTML = city_weather[i];
+							}
+						})
+					}
+				)
+			}
 		</script>
 	</head>
 	
-	<body>
-	
-		<header>
-		</header>
+	<body onload = "initialize()">
+		<div id="bloc_page">
+			<div id="images">
+				<div id="banniere_titre">
+					<h1>Nom du site</h1>
+				</div>
+			</div>
+			
+			<div id="saisie">
+				<label for="ville">Enter a city name :</label>
+				<input type="text" id="ville" name="ville">
+			</div>
 		
-		<div>
+			<section>
+		
+				<div id="forecast">
+					<h1> Weather </h1>
+					<img alt="Weather icon"/>
+					<div>
+						<p>Date : <span id="date_1"></span> at 12:00</p>
+						<p id="weather_1"></p>
+					</div>
+					<div>
+						<p>Date : <span id="date_2"></span> at 12:00</p>
+						<p id="weather_2"></p>
+					</div>
+					<div>
+						<p>Date : <span id="date_3"></span> at 12:00</p>
+						<p id="weather_3"></p>
+					</div>
+					<div>
+						<p>Date : <span id="date_4"></span> at 12:00</p>
+						<p id="weather_4"></p>
+					</div>
+				</div>
+			
+				 <div id="map"></div>
+			
+			</section>
+			
+			<footer>
+				<img src="logo_upvm.png" alt="Logo UPVM"/>
+				<div>
+					<h1>W122MI5 - Intégration de données connectées</h1>
+					<p>Baptiste Bonneau, Pierre Curras et Taha El Karafli</p>
+				</div>
+			</footer>
 		</div>
-		
-		<section>
-		
-			<div>
-				<h2> Météo </h2>
-				<div>
-					<h4>Date : </h4>
-					<p id="date_1"></p>
-					<p> at 12:00</p>
-					<p id="weather_1"></p>
-				</div>
-				<div>
-					<h4>Date : </h4>
-					<p id="date_2"></p>
-					<p> at 12:00</p>
-					<p id="weather_2"></p>
-				</div>
-				<div>
-					<h4>Date : </h4>
-					<p id="date_3"></p>
-					<p> at 12:00</p>
-					<p id="weather_3"></p>
-				</div>
-				<div>
-					<h4>Date : </h4>
-					<p id="date_4"></p>
-					<p> at 12:00</p>
-					<p id="weather_4"></p>
-				</div>
-			</div>
-			
-			<div>
-			</div>
-			
-		</section>
-		
-		<footer>
-		</footer>
-
 	</body>
 </html>
