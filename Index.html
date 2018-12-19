@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="utf-8">
+		 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
+		 integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+		 crossorigin=""/>
+		 <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
+		 integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
+		 crossorigin=""></script>
+		<link rel="stylesheet" href="style.css" />
+		<title>Projet Intégration de données connectées</title>
+		<script type="text/javascript">
+			function initialize(){
+				var city = "Montpellier,fr";
+				<!-- if(document.getElementById("ville").value === null){ -->
+					<!-- city.slice(0, 11) = document.getElementById("ville").value; -->
+				<!-- } -->
+				var key = "&appid=24c87f8b912589e4cf74c830d255d035";
+				var address = 'http://api.openweathermap.org/data/2.5/forecast?q='+city+key;
+				var longitude; var latitude;
+				fetch(address).then(
+					function(response){
+						response.json().then(function(data){
+							latitude = data.city.coord.lat;
+							longitude = data.city.coord.lon;
+							var result = data.list;
+							var dates = []; // Garder les dates des quatre prochains jours
+							var city_weather = []; // Garder le temps prévu pour les quatre prochains jours
+							var len = 0; // Stocker la longueur des deux tableaux précédents
+							for(i=0;i<result.length;i++){
+								if(result[i.toString()]["dt_txt"].search("12:00:00")!=-1){
+									dates[len] = result[i.toString()]["dt_txt"].slice(0, 10);
+									city_weather[len] = result[i.toString()]["weather"]["0"]["description"]
+									len = len + 1;
+								}
+							}
+							for(i=1;i<len;i++){
+								document.getElementById('date_'+i.toString()).innerHTML = dates[i];
+								document.getElementById('weather_'+i.toString()).innerHTML = city_weather[i];
+							}
+							var map = L.map('map').setView([latitude, longitude], 14);
+							var osmLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+							attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+							maxZoom: 18
+							});
+							map.addLayer(osmLayer);
+						})
+					}
+				)
+				<!-- let url = 'https://api.pexels.com/v1/search?query=Paris&per_page=15&page=1'; -->
+
+				<!-- let headers = new Headers(); -->
+
+				<!-- //headers.append('Content-Type', 'text/json'); -->
+				<!-- headers.append('Authorization:563492ad6f917000010000017eba588be13d433cb7e1c10067c13f63'); -->
+
+				<!-- fetch(url, {method:'GET',headers: headers,})function(response){ -->
+						<!-- response.json().then(function(data){} -->
+			<!-- } -->
+			}
+		</script>
+	</head>
+	
+	<body onload = "initialize()">
+		<div id="bloc_page">
+			<div id="images">
+				<div id="banniere_titre">
+					<h1>Nom du site</h1>
+				</div>
+			</div>
+			
+			<div id="saisie">
+				<label for="ville">Enter a city name :</label>
+				<input type="text" id="ville" name="ville">
+			</div>
+		
+			<section>
+		
+				<div id="forecast">
+					<h1> Weather </h1>
+					<img alt="Weather icon"/>
+					<div>
+						<p>Date : <span id="date_1"></span> at 12:00</p>
+						<p id="weather_1"></p>
+					</div>
+					<div>
+						<p>Date : <span id="date_2"></span> at 12:00</p>
+						<p id="weather_2"></p>
+					</div>
+					<div>
+						<p>Date : <span id="date_3"></span> at 12:00</p>
+						<p id="weather_3"></p>
+					</div>
+					<div>
+						<p>Date : <span id="date_4"></span> at 12:00</p>
+						<p id="weather_4"></p>
+					</div>
+				</div>
+			
+				 <div id="map"></div>
+			
+			</section>
+			
+			<footer>
+				<img src="logo_upvm.png" alt="Logo UPVM"/>
+				<div>
+					<h1>W122MI5 - Intégration de données connectées</h1>
+					<p>Baptiste Bonneau, Pierre Curras et Taha El Karafli</p>
+				</div>
+			</footer>
+		</div>
+	</body>
+</html>
