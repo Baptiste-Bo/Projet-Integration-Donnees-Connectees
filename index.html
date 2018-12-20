@@ -13,12 +13,11 @@
 		 
 		<script type="text/javascript">
 			function initialize(){
-				 
 				var city = document.getElementById("city").value;
-				<!-- if(document.getElementById("ville").value === null){ -->
-					<!-- city.slice(0, 11) = document.getElementById("ville").value; -->
-				<!-- } -->
-				var key = "&appid=24c87f8b912589e4cf74c830d255d035";
+				if(city == ""){
+					city = "Montpellier";
+				}
+				var key = ",fr&appid=24c87f8b912589e4cf74c830d255d035";
 				var address = 'http://api.openweathermap.org/data/2.5/forecast?q='+city+key;
 				var longitude; var latitude;
 				fetch(address).then(
@@ -29,37 +28,31 @@
 							var result = data.list;
 							var dates = []; // Garder les dates des quatre prochains jours
 							var city_weather = []; // Garder le temps prévu pour les quatre prochains jours
+							var ident = [];
 							var len = 0; // Stocker la longueur des deux tableaux précédents
 							for(i=0;i<result.length;i++){
 								if(result[i.toString()]["dt_txt"].search("12:00:00")!=-1){
 									dates[len] = result[i.toString()]["dt_txt"].slice(0, 10);
-									city_weather[len] = result[i.toString()]["weather"]["0"]["description"]
+									city_weather[len] = result[i.toString()]["weather"]["0"]["description"];
+									ident[len] = result[i.toString()]["weather"]["0"]["icon"];
 									len = len + 1;
 								}
 							}
 							for(i=1;i<len;i++){
 								document.getElementById('date_'+i.toString()).innerHTML = dates[i];
 								document.getElementById('weather_'+i.toString()).innerHTML = city_weather[i];
+								var source = 'images/'+ident[i]+'.png';
+								document.getElementById('image_'+i.toString()).setAttribute('src', source);;
 							}
-							var map = L.map('map').setView([latitude, longitude], 14);
-							var osmLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+							var map = L.map('map').setView([latitude, longitude], 13);
+							var layer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 							attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
 							maxZoom: 18
 							});
-							map.addLayer(osmLayer);
+							map.addLayer(layer);
 						})
 					}
 				)
-				<!-- let url = 'https://api.pexels.com/v1/search?query=Paris&per_page=15&page=1'; -->
-
-				<!-- let headers = new Headers(); -->
-
-				<!-- //headers.append('Content-Type', 'text/json'); -->
-				<!-- headers.append('Authorization:563492ad6f917000010000017eba588be13d433cb7e1c10067c13f63'); -->
-
-				<!-- fetch(url, {method:'GET',headers: headers,})function(response){ -->
-						<!-- response.json().then(function(data){} -->
-			<!-- } -->
 			}
 		</script>
 	 
@@ -69,35 +62,49 @@
 		<div id="bloc_page">
 			<div id="images">
 				<div id="banniere_titre">
-					<h1>Nom du site</h1>
+					<h1>Four days in...</h1>
 				</div>
 			</div>
 			
-			 <FORM>
- 				<input type="text" name="sethu" id="city" value="" />
- 				<input type="button" value="send " onclick="initialize();" />
+			<div id="saisie">
+				<p>Enter the city name : </p>
+				<FORM>
+					<input type="text" name="sethu" id="city" value="" />
+					<input type="button" value="send " onclick="initialize()" />
 				</FORM>
+			</div>
 		
 			<section>
 		
 				<div id="forecast">
 					<h1> Weather </h1>
-					<img alt="Weather icon"/>
 					<div>
-						<p>Date : <span id="date_1"></span> at 12:00</p>
-						<p id="weather_1"></p>
+						<img id="image_1" src="images/01d.png" alt="img weather"/>
+						<div>
+							<p>Date : <span id="date_1"></span> at 12:00</p>
+							<p id="weather_1"></p>
+						</div>
 					</div>
 					<div>
-						<p>Date : <span id="date_2"></span> at 12:00</p>
-						<p id="weather_2"></p>
+						<img id="image_2" src="images/" alt="img weather"/>
+						<div>
+							<p>Date : <span id="date_2"></span> at 12:00</p>
+							<p id="weather_2"></p>
+						</div>
 					</div>
 					<div>
-						<p>Date : <span id="date_3"></span> at 12:00</p>
-						<p id="weather_3"></p>
+						<img id="image_3" src="images/" alt="img weather"/>
+						<div>
+							<p>Date : <span id="date_3"></span> at 12:00</p>
+							<p id="weather_3"></p>
+						</div>
 					</div>
 					<div>
-						<p>Date : <span id="date_4"></span> at 12:00</p>
-						<p id="weather_4"></p>
+						<img id="image_4" src="images/" alt="img weather"/>
+						<div>
+							<p>Date : <span id="date_4"></span> at 12:00</p>
+							<p id="weather_4"></p>
+						</div>
 					</div>
 				</div>
 			
@@ -106,7 +113,7 @@
 			</section>
 			
 			<footer>
-				<img src="logo_upvm.png" alt="Logo UPVM"/>
+				<img src="images/logo_upvm.png" alt="Logo UPVM"/>
 				<div>
 					<h1>W122MI5 - Intégration de données connectées</h1>
 					<p>Baptiste Bonneau, Pierre Curras et Taha El Karafli</p>
